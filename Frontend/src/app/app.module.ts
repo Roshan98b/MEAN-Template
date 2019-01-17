@@ -9,6 +9,19 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { AdminContentComponent } from './components/admin/admin-content/admin-content.component';
+import { AdminFooterComponent } from './components/admin/admin-footer/admin-footer.component';
+import { AdminTopNavBarComponent } from './components/admin/admin-top-nav-bar/admin-top-nav-bar.component';
+import { AdminSideNavBarComponent } from './components/admin/admin-side-nav-bar/admin-side-nav-bar.component';
+import { DisplayComponent } from './components/admin/admin-content/display/display.component';
+import { UserComponent } from './components/user/user.component';
+import { UserContentComponent } from './components/user/user-content/user-content.component';
+import { UserFooterComponent } from './components/user/user-footer/user-footer.component';
+import { UserTopNavBarComponent } from './components/user/user-top-nav-bar/user-top-nav-bar.component';
+import { UserSideNavBarComponent } from './components/user/user-side-nav-bar/user-side-nav-bar.component';
+import { UserDisplayComponent } from './components/user/user-content/user-display/user-display.component';
+import { UploadComponent } from './components/user/user-content/upload/upload.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +29,20 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     LoginComponent,
     RegisterComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    AdminComponent,
+    AdminContentComponent,
+    AdminFooterComponent,
+    AdminTopNavBarComponent,
+    AdminSideNavBarComponent,
+    DisplayComponent,
+    UserComponent,
+    UserContentComponent,
+    UserFooterComponent,
+    UserTopNavBarComponent,
+    UserSideNavBarComponent,
+    UserDisplayComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
