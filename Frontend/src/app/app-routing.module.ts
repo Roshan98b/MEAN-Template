@@ -11,6 +11,8 @@ import { UserComponent } from './components/user/user.component';
 import { UserContentComponent } from './components/user/user-content/user-content.component';
 import { UserDisplayComponent } from './components/user/user-content/user-display/user-display.component';
 import { UploadComponent } from './components/user/user-content/upload/upload.component';
+import { AdminGuard } from './guard/admin/admin.guard';
+import { UserGuard } from './guard/user/user.guard';
 
 const routes: Routes = [
   {
@@ -54,7 +56,8 @@ const routes: Routes = [
           },
           {
             path: 'display',
-            component: DisplayComponent
+            component: DisplayComponent,
+            canActivate: [AdminGuard]
           }
         ]
       }
@@ -80,11 +83,13 @@ const routes: Routes = [
           },
           {
             path: 'display',
-            component: UserDisplayComponent
+            component: UserDisplayComponent,
+            canActivate: [UserGuard]
           },
           {
             path: 'upload',
-            component: UploadComponent
+            component: UploadComponent,
+            canActivate: [UserGuard]
           }
         ]
       }
