@@ -62,7 +62,7 @@ module.exports.getByEmail = (email, callback) => {
 	Member.findOne(query, callback);
 };
 
-//Reset password by ID
+//Reset password by ID *
 module.exports.resetPasswordById = (id, password, callback) => {
 	let query = {_id: id};
 	let opt = {$set: {password: password}};
@@ -90,18 +90,6 @@ module.exports.updateByEmail = (email, firstName, lastName, dob, gender, mobileN
 	Member.findOneAndUpdate(query, opt, callback);
 };
 
-// Search Member
-module.exports.searchgh = (model, callback) => {
-	var query = {email: {$regex: model, $options: 'i'}};
-	Member.find(query, callback);
-};
-
-// Get Group Members
-module.exports.getGroupMembers = (_groupId, callback) => {
-	var query = {_groupId: {$in: [_groupId]}};
-	Member.find(query, callback);
-};
-
 // Delete
 module.exports.deleteById = (id, groupId, callback) => {
 	let query = {_id: id};
@@ -114,16 +102,4 @@ module.exports.updateByEmail = (email, firstName, lastName, dob, gender, mobileN
 	let query = {email: email};
 	let opt = {$set: {firstname: firstName, lastname: lastName, dob: dob, gender: gender, contactno: mobileNumber}};
 	Member.findOneAndUpdate(query, opt, callback);
-};
-
-module.exports.makePayment = (obj, callback) => {
-	var query = {_id: mongoose.Types.ObjectId(obj._Uid)};
-	var update = {$set: {balance: obj.memberBalance}};
-	Member.update(query, update, callback);
-};
-
-module.exports.updateBalance = (obj, callback) => {
-	var query = {_id: mongoose.Types.ObjectId(obj._Did)};
-	var update = {$inc: {balance: obj.destBalance}};
-	Member.update(query, update, callback);
 };

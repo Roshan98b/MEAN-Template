@@ -67,14 +67,6 @@ export class UserService {
     });
   }
 
-  getProfile() {
-    this.token = localStorage.getItem('id_token');
-    return this.http.get(this.url + '/profile', {
-      observe: 'body',
-      headers: new HttpHeaders().append('Content-Type', 'application/json').append('Authorization', this.token)
-    });
-  }
-
   auth(data) {
     localStorage.setItem('id_token', data.token);
     localStorage.setItem('user', JSON.stringify(data.user));

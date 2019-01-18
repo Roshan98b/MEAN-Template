@@ -68,7 +68,7 @@ router.post('/member', (req, res) => {
 	});
 });
 
-//Forgot password
+//Forgot password *
 router.post('/forgotpassword',
 	(req, res) => {
 		Member.getByEmail(req.body.email, (err, model) => {
@@ -92,7 +92,7 @@ router.post('/forgotpassword',
 					    let mailOptions = {
 					        from: '"Admin" <aaroncoc0001@gmail.com>', // sender address
 					        to: req.body.email, // list of receivers
-					        subject: 'Reset your ExpenseTracker password', // Subject line
+					        subject: 'Reset your Demo App password', // Subject line
 					        text: '', // plain text body
 					        html: output // html body
 					    };
@@ -180,52 +180,6 @@ router.post('/editedprofile',
 	});
 });
 
-// Create Member
-router.post('/createmember',
-	passport.authenticate('jwt', {session: false}),
-	(req, res) => {
-		if(req.body.response) {
-			Member.updateById(req.body._Uid, req.body._groupId, (err, model) => {
-				if(err) res.status(501).json(err);
-				else {
-					TempMember.deleteById(req.body._id, (err) => {
-						if(err) res.status(501).json(err);
-						else {
-							res.status(200).json({message: 'Member Created Successfully'});
-						}
-					});
-				}
-			});
-		} else {
-			TempMember.deleteById(req.body._id, (err) => {
-				if(err) res.status(501).json(err);
-				else {
-					res.status(200).json({message: 'Member Created Successfully'});
-				}
-			});			
-		}
-	}
-);
-
-// Search Member
-router.post('/searchmember',
-	passport.authenticate('jwt', {session: false}),
-	(req, res) => {
-		Member.searchgh(req.body.email, (err, model) => {
-			if(err) res.status(501).json(err);
-			else res.status(200).json(model);
-		});
-	}
-);
-
-// Profile
-router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res) => {
-	Member.getById(req.user._id, (err, model) => {
-			if(err) res.status(501).json(err);
-			else userDetails(model, res, token);
-	});	
-});
-
 //Check password before allowing access to change password *
 router.post('/checkPassword',
 	passport.authenticate('jwt', {session: false}),
@@ -241,20 +195,7 @@ router.post('/checkPassword',
 						res.status(501).json({message: 'Incorrect password!!'});
 				}
 			});
-		});
-
-// Profile
-router.post('/addmoney', 
-	passport.authenticate('jwt', {session: false}), 
-	(req, res) => {
-		let obj = {};
-		obj.destBalance = req.body.amount;
-		obj._Did = req.body._id;
-		Member.updateBalance(obj, (err, model) => {
-				if(err) res.status(501).json(err);
-				else res.status(200).json(obj);
-		});	
-	}
+		}
 );
 
 module.exports = router;
