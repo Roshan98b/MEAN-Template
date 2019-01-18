@@ -10,7 +10,7 @@ var path = require('path');
 var users = require('./route/users');
 
 var app = express();
-var mongodbUrl = 'mongodb://localhost:27017/ECG';
+var mongodbUrl = 'mongodb://localhost:27017/demo';
 
 // MongoDB Connection
 mongoose.connect(mongodbUrl, { useNewUrlParser: true });
