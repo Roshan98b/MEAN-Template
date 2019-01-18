@@ -45,18 +45,18 @@ var Member = mongoose.model('member', ModelSchema);
 
 module.exports = Member;
 
-// Create
+// Create*
 module.exports.addUser = (model, callback) => {
 	model.password = bcrypt.hashSync(model.password, 10);
 	model.save(callback);
 };
 
-// Read
+// Read *
 module.exports.getById = (id, callback) => {
 	Member.findById(id, callback);
 };
 
-// Read
+// Read *
 module.exports.getByEmail = (email, callback) => {
 	let query = {email: email};
 	Member.findOne(query, callback);
@@ -69,7 +69,7 @@ module.exports.resetPasswordById = (id, password, callback) => {
 	Member.update(query, opt, callback);
 };
 
-//Reset security credentials by ID
+//Reset security credentials by ID *
 module.exports.resetSecurityCredentialsById = (id, question, answer, callback) => {
 	let query = {_id: id};
 	let opt = {$set: {securityQuestion: question, securityAnswer: answer}};
@@ -109,7 +109,7 @@ module.exports.deleteById = (id, groupId, callback) => {
 	Member.update(query, opt, callback);	
 };
 
-//Update
+//Update *
 module.exports.updateByEmail = (email, firstName, lastName, dob, gender, mobileNumber, callback) => {
 	let query = {email: email};
 	let opt = {$set: {firstname: firstName, lastname: lastName, dob: dob, gender: gender, contactno: mobileNumber}};

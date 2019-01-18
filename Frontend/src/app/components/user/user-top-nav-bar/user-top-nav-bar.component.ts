@@ -309,7 +309,7 @@ export class UserTopNavBarComponent implements OnInit, DoCheck {
       this.userService.resetSecurityCredentials(this.obj2).subscribe(
         (message) => {
           console.log(message);
-          alert('Your have successfully changed your security credentials!!')
+          alert('Your have successfully changed your security credentials!!');
           this.sForm.reset();
           $('#changesecurity').modal('hide');
         },

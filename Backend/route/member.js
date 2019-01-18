@@ -11,62 +11,10 @@ var Member = require('../model/member');
 var router = express.Router();
 var token = '';
 
-// Local Storage User Details
-function userDetails(model, res) {
-	var group = [];
-	for(let i of model._groupId) {
-		Group.getById(i, (err, gmodel) => {
-			if(err) console.log(err);
-			else {
-				if(model._id.equals(gmodel._Uid)) flag = true;
-				else flag = false;
-				group.push({_groupId: gmodel._id, groupName: gmodel.groupName, gh: flag});
-				if(group.length == model._groupId.length) {
-					res.status(200).json(
-					{
-						message: 'Authentication Success',
-						token: 'JWT '+token,
-						user: {
-							_id: model._id,
-							firstname: model.firstname,
-							lastname: model.lastname,
-							dob: model.dob,
-							gender: model.gender,
-							contactno: model.contactno,
-							email: model.email,
-							balance: model.balance,
-							group: group
-						}
-					});
-				}
-			}
-		});
-	}
-	if(!model._groupId.length) {
-		res.status(200).json(
-		{
-			message: 'Authentication Success',
-			token: 'JWT '+token,
-			user: {
-				_id: model._id,
-				firstname: model.firstname,
-				lastname: model.lastname,
-				dob: model.dob,
-				gender: model.gender,
-				contactno: model.contactno,
-				email: model.email,
-				balance: model.balance,
-				group: []
-			}
-		});
-	} 						
-}
-
-
-//Login
+//Login *
 router.post('/login', (req, res) => {
 	Member.getByEmail(req.body.email, (err, model) => {
-		if(err) return done(err);
+		if(err) return res.status(501).json(err);
 		if(model == null) return res.status(501).json({message: 'Invalid username!! Please register before trying to login!!'});  
 		else {
 			var flag;
@@ -74,14 +22,28 @@ router.post('/login', (req, res) => {
 				token = jwt.sign(model.toJSON(), 'app', {
 					expiresIn: 86400
 				});
-				userDetails(model, res, token);
+				res.status(200).json(
+                    {
+                        message: 'Authentication Success',
+                        token: 'JWT '+token,
+                        user: {
+                            _id: model._id,
+                            firstname: model.firstname,
+                            lastname: model.lastname,
+                            dob: model.dob,
+                            gender: model.gender,
+                            contactno: model.contactno,
+                            email: model.email
+                        }
+                    }
+                );
 			}
 			else res.status(501).json({message: 'Invalid login credentials!!'});
 		}
 	});	
 });
 
-// Register
+// Register *
 router.post('/member', (req, res) => {
 	var member = new Member({
 		_id: new mongoose.Types.ObjectId(),
@@ -148,7 +110,7 @@ router.post('/forgotpassword',
 		});
 	});
 
-//Reset Password
+//Reset Password *
 router.post('/resetpassword',
 	(req, res) => {
 		req.body.password = bcrypt.hashSync(req.body.password, 10);
@@ -162,7 +124,7 @@ router.post('/resetpassword',
 			}
 		});
 	});
-
+// Reset password 1 *
 router.post('/resetpassword1',
   passport.authenticate('jwt', {session: false}),
 	(req, res) => {
@@ -178,7 +140,7 @@ router.post('/resetpassword1',
 		});
 	});
 
-//Reset Security Credentials
+//Reset Security Credentials *
 router.post('/resetSecurityCredentials',
   passport.authenticate('jwt', {session: false}),
 	(req, res) => {
@@ -193,7 +155,7 @@ router.post('/resetSecurityCredentials',
 		});
 	});
 
-//Edit profile
+//Edit profile *
 router.post('/editedprofile',
 	passport.authenticate('jwt', {session: false}),
 	(req, res) => {
@@ -264,7 +226,7 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res
 	});	
 });
 
-//Check password before allowing access to change password
+//Check password before allowing access to change password *
 router.post('/checkPassword',
 	passport.authenticate('jwt', {session: false}),
  		(req, res) => {
